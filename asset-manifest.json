@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.453a249e.css",
-    "main.js": "/static/js/main.a592a061.js",
-    "static/media/specialised-service.png": "/static/media/specialised-service.791f4ec02d569933650f.png",
+    "main.css": "/static/css/main.d86c14a5.css",
+    "main.js": "/static/js/main.3756da43.js",
     "static/media/Kailas_sir.png": "/static/media/Kailas_sir.6b57ad3edf06be1ee985.png",
-    "static/media/technical.png": "/static/media/technical.b04cb396406269698f93.png",
-    "static/media/staffing.png": "/static/media/staffing.991e76589291c5dc70c0.png",
-    "static/media/soft-services.png": "/static/media/soft-services.7a04885af42ff6d8b4ac.png",
     "static/media/logo.png": "/static/media/logo.358fc0a91ec6671f0019.png",
     "static/media/Ashish_mishra.jpeg": "/static/media/Ashish_mishra.ce1abc11b92bbff95b52.jpeg",
+    "static/media/specialised-service.webp": "/static/media/specialised-service.7842f6f6d232066d610d.webp",
+    "static/media/staffing.webp": "/static/media/staffing.f8a8c6bd977c040ebb19.webp",
+    "static/media/technical.webp": "/static/media/technical.a1ba2b118ba9a316c9a6.webp",
+    "static/media/soft-services.webp": "/static/media/soft-services.3301bc2079d5dbd4bc9b.webp",
     "index.html": "/index.html",
-    "main.453a249e.css.map": "/static/css/main.453a249e.css.map",
-    "main.a592a061.js.map": "/static/js/main.a592a061.js.map"
+    "main.d86c14a5.css.map": "/static/css/main.d86c14a5.css.map",
+    "main.3756da43.js.map": "/static/js/main.3756da43.js.map"
   },
   "entrypoints": [
-    "static/css/main.453a249e.css",
-    "static/js/main.a592a061.js"
+    "static/css/main.d86c14a5.css",
+    "static/js/main.3756da43.js"
   ]
 }
