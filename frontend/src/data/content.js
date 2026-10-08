@@ -3,10 +3,10 @@
 // They are placeholders — swap the `img` value in each entry with the
 // client's own photographs after development.
 import about from "../img/Kailas_sir.png";
-import staffing from "../img/Services/staffing.png";
-import softservices from "../img/Services/soft-services.png";
-import technical from "../img/Services/technical.png";
-import specialisedservice from "../img/Services/specialised-service.png";
+import staffing from "../img/Services/staffing.webp";
+import softservices from "../img/Services/soft-services.webp";
+import technical from "../img/Services/technical.webp";
+import specialisedservice from "../img/Services/specialised-service.webp";
 
 // team//
 import ashishmishra from "../img/Ashish_mishra.jpeg";

@@ -5,7 +5,6 @@ import {
   useScroll,
   useTransform,
   useMotionValueEvent,
-  useSpring,
 } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
@@ -96,23 +95,29 @@ export default function ParallaxServices() {
     offset: ["start start", "end end"],
   });
 
-  // Smooth out raw scroll progress so all derived transforms feel fluid,
-  // not jumpy on fast/trackpad scroll.
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
+  // Drive everything from raw scroll progress. A spring here made the slide
+  // index trail behind the scroll position, which felt laggy/stuck.
+  const bgDrift = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
 
-  const bgDrift = useTransform(smoothProgress, [0, 1], ["0%", "-8%"]);
-  const headingY = useTransform(smoothProgress, [0, 1], [0, -80]);
-  const textY = useTransform(smoothProgress, [0, 1], [50, -40]);
-
-  // Throttle active-index updates: only re-render when the index actually changes.
-  useMotionValueEvent(smoothProgress, "change", (v) => {
+  // Only re-render when the index actually changes.
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
     const idx = Math.min(N - 1, Math.max(0, Math.floor(v * N)));
     setActive((prev) => (prev !== idx ? idx : prev));
   });
+
+  // Preload + decode every slide image up front so switching slides never
+  // waits on a network fetch or a main-thread image decode.
+  useEffect(() => {
+    if (isMobile) return;
+    SERVICE_PILLARS.forEach((s) => {
+      [s.img, s.background].forEach((src) => {
+        if (!src) return;
+        const img = new Image();
+        img.src = src;
+        img.decode?.().catch(() => {});
+      });
+    });
+  }, [isMobile]);
 
   if (isMobile) return <MobileServices />;
 
@@ -136,11 +141,12 @@ export default function ParallaxServices() {
               key={service.key}
               src={service.background || service.img}
               alt=""
-              initial={{ opacity: 0, scale: 1.08 }}
-              animate={{ opacity: 1, scale: 1 }}
+              decoding="async"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute inset-0 w-full h-full object-cover"
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="absolute inset-0 w-full h-full object-cover will-change-[opacity]"
             />
           </AnimatePresence>
         </motion.div>
@@ -207,7 +213,7 @@ export default function ParallaxServices() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    transition={{ duration: 0.2, ease: "easeInOut" }}
                     className="font-display text-2xl md:text-4xl lg:text-5xl text-white leading-[1.02]"
                   >
                     {service.title}
@@ -222,7 +228,7 @@ export default function ParallaxServices() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4, ease: "easeInOut", delay: 0.03 }}
+                    transition={{ duration: 0.2, ease: "easeInOut" }}
                     className="text-white/70 text-base md:text-lg max-w-xl mx-auto"
                   >
                     {service.tagline}
